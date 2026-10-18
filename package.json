@@ -1,0 +1,11 @@
+{
+  "name": "skybranch",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloud-hosted employee hierarchy management",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:web": "npm run dev --workspace apps/web"
+  }
+}
