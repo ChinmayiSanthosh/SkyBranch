@@ -1,8 +1,10 @@
-import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import {prisma} from "./db";
+import { env } from "./config/env";
+import { prisma } from "./db";
+import authRoutes from "./routes/auth.routes";
+import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
 
@@ -23,7 +25,9 @@ app.get("/api/health/db", async (_req, res) => {
   }
 });
 
-const port = Number(process.env.PORT) || 4000;
-app.listen(port, () => {
-  console.log(`SkyBranch API listening on port ${port}`);
+app.use("/api/auth", authRoutes);
+app.use(errorHandler);
+
+app.listen(env.port, () => {
+  console.log(`SkyBranch API listening on port ${env.port}`);
 });
