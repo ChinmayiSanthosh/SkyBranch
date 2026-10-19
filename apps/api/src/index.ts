@@ -5,6 +5,7 @@ import { env } from "./config/env";
 import { prisma } from "./db";
 import authRoutes from "./routes/auth.routes";
 import { errorHandler } from "./middleware/errorHandler";
+import employeeRoutes from "./routes/employee.routes";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get("/api/health/db", async (_req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/employees", employeeRoutes);
 app.use(errorHandler);
 
 app.listen(env.port, () => {
