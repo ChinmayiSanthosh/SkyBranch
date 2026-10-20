@@ -1,0 +1,7 @@
+.button {
+    all: unset;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--bark-700);
+}
+.button:focus-visible { outline: 2px solid var(--sky-500); outline-offset: 2px; }

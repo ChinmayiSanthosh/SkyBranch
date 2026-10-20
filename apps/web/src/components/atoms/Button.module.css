@@ -15,3 +15,4 @@
 .success { background: var(--leaf-500); color: #fff; }
 .success:hover:not(:disabled) { background: var(--leaf-600); }
 .danger { background: var(--danger); color: #fff; }
+.small { padding: 0.35rem 0.7rem; font-size: 0.85rem; }

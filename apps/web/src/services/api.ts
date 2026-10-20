@@ -1,4 +1,4 @@
-import type {Employee,User} from "./types";
+import type {Employee,EmployeeInput,User} from "./types";
 
 const BASE_URL =
 (import.meta.env.VITE_API_URL as string | undefined) ?? "http://localhost:4000";
@@ -54,4 +54,20 @@ export const api = {
         }),
         me: () => request<{user: User }>("/api/auth/me"),
         listEmployees: () => request<{employees: Employee[]}>("/api/employees"),
+
+        createEmployee: (data:EmployeeInput) =>
+            request<{employee:Employee}>("/api/employees", {
+                method: "POST",
+                body:JSON.stringify(data),
+            }),
+
+        updateEmployee:(id:number,data:Partial<EmployeeInput>) =>
+            request<{employee:Employee}>(`/api/employees/${id}`,{
+                method: "PATCH",
+                body:JSON.stringify(data),
+            }),
+        
+        deleteEmployee:(id:number) =>
+            request<void>(`/api/employees/${id}`, {method:"DELETE"}),
+            
 };

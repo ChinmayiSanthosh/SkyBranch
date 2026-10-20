@@ -1,0 +1,15 @@
+.panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--glass-bg-solid);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+}
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.sub { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.9rem; }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.error { display: flex; align-items: center; gap: 0.75rem; color: var(--danger); }

@@ -15,3 +15,15 @@ export interface Employee {
     managerId: number | null;
     manager: { id: number; name: string; surname: string } | null;
 }
+
+
+export interface EmployeeInput{
+    name:string;
+    surname: string;
+    email: string;
+    birthDate: string;
+    employeeNumber: string;
+    salary: number;
+    role: string;
+    managerId: number | null;
+}
