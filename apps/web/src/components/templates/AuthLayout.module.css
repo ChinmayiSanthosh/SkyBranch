@@ -7,56 +7,12 @@
   padding: 1.5rem;
 }
 
-/* floating white glows */
-.blob {
+/* full-screen layer behind the card that holds Lightfall.
+   No background colour here, so your page gradient shows through. */
+.background {
   position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.7);
-  filter: blur(45px);
-  pointer-events: none;
-  will-change: transform;
-}
-.blobOne {
-  width: 340px;
-  height: 340px;
-  top: 8%;
-  left: 18%;
-  animation: floatOne 11s ease-in-out infinite alternate;
-}
-.blobTwo {
-  width: 280px;
-  height: 280px;
-  bottom: 6%;
-  right: 16%;
-  background: rgba(255, 255, 255, 0.55);
-  animation: floatTwo 13s ease-in-out infinite alternate;
-}
-.blobThree {
-  width: 200px;
-  height: 200px;
-  top: 58%;
-  left: 8%;
-  background: rgba(255, 255, 255, 0.5);
-  animation: floatThree 9s ease-in-out infinite alternate;
-}
-
-@keyframes floatOne {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(60px, 40px) scale(1.12); }
-  100% { transform: translate(20px, 90px) scale(0.95); }
-}
-@keyframes floatTwo {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-70px, -30px) scale(0.92); }
-  100% { transform: translate(-20px, -80px) scale(1.1); }
-}
-@keyframes floatThree {
-  0%   { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(80px, -60px) scale(1.15); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .blob { animation: none; }
+  inset: 0;
+  z-index: 0;
 }
 
 .card {

@@ -1,0 +1,7 @@
+.controls {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  gap: 0.4rem;
+}
