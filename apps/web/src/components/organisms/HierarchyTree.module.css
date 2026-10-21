@@ -1,0 +1,37 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+.withPanel { grid-template-columns: minmax(0, 1fr) 320px; }
+
+/* On narrow screens, the details sit below the tree instead of beside it */
+@media (max-width: 900px) {
+  .withPanel { grid-template-columns: minmax(0, 1fr); }
+}
+
+.canvas {
+  position: relative;
+  min-width: 0;
+  height: min(72vh, 680px);
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.38));
+}
+.svg { display: block; cursor: grab; touch-action: none; user-select: none; }
+.dragging { cursor: grabbing; }
+.branch { fill: none; stroke: var(--bark-900); stroke-linecap: round; opacity: 0.85; }
+.trunk { stroke: var(--bark-900); stroke-linecap: round; }
+.ground { stroke: var(--bark-900); stroke-width: 1.5; opacity: 0.7; }
+.hint { margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--muted); }
+.empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  color: var(--muted);
+}

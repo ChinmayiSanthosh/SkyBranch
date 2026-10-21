@@ -1,0 +1,37 @@
+:root {
+  /* sky theme colors...i might change it later if i get time */
+  --sky-50: #f8f3f6;
+  --sky-100: #efe3ea;
+  --sky-300: #b9a9c4;
+  --sky-500: #6f7fa3;
+  --sky-600: #56688f;
+  --sky-700: #3f4f74;
+
+  /* success actions */
+  --leaf-500: #5f9e7f;
+  --leaf-600: #4a8266;
+
+  /* text and the tree */
+  --bark-500: #6b6f85;
+  --bark-700: #3a3f55;
+  --bark-900: #1d2230;
+
+  --coral-400: #f2a090;
+  --coral-500: #e5806f;
+
+  --danger: #b8372b;
+  --text: var(--bark-900);
+  --muted: var(--bark-500);
+  --radius: 14px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* background for now */
+  --dusk-gradient: linear-gradient(100deg, #9aa5bd 0%, #c9b6c6 38%, #f1c3c0 68%, #f8b4a6 100%);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-solid: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-shadow: 0 8px 32px rgba(63, 79, 116, 0.18);
+  --glass-blur: blur(14px) saturate(120%);
+}

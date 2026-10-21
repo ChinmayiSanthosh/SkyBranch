@@ -1,0 +1,18 @@
+.button {
+    border: 0;
+    border-radius: 10px;
+    padding: 0.65rem 1.2rem;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+}
+.button:disabled { opacity: 0.6; cursor: not-allowed; }
+.primary { background: var(--sky-600); color: #fff; }
+.primary:hover:not(:disabled) { background: var(--sky-700); }
+.secondary { background: rgba(255, 255, 255, 0.6); color: var(--sky-700); border: 1px solid var(--glass-border); }
+.secondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.85); }
+.success { background: var(--leaf-500); color: #fff; }
+.success:hover:not(:disabled) { background: var(--leaf-600); }
+.danger { background: var(--danger); color: #fff; }
+.small { padding: 0.35rem 0.7rem; font-size: 0.85rem; }

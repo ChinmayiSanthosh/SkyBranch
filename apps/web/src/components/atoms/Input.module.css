@@ -1,0 +1,11 @@
+.input {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--sky-300);
+    border-radius: 10px;
+    font: inherit;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--text);
+}
+.input:focus { outline: 2px solid var(--sky-500); outline-offset: 1px; }
+.input[aria-invalid="true"] { border-color: var(--danger); }

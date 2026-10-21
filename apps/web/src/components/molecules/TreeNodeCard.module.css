@@ -1,0 +1,29 @@
+.card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  background: var(--glass-bg-solid);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(63, 79, 116, 0.22);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+}
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: 0 10px 22px rgba(63, 79, 116, 0.3), 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+.text { min-width: 0; display: grid; }
+.name { font-weight: 700; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.role { font-size: 0.75rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.match { box-shadow: 0 0 0 3px var(--coral-400), 0 8px 22px rgba(229, 128, 111, 0.45); }
+.selected { box-shadow: 0 0 0 3px var(--sky-600), 0 8px 22px rgba(63, 79, 116, 0.4); }
+.dim { opacity: 0.35; }

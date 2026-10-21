@@ -1,0 +1,53 @@
+.link {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 1.15rem 0.6rem;
+  border-radius: 999px;
+  color: var(--bark-700);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease;
+}
+
+/* The glowing white line underneath */
+.link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.95), 0 0 16px 3px rgba(255, 255, 255, 0.55);
+  transform: translateX(-50%);
+  transition: width 0.25s ease;
+}
+
+/* Hover: the button floats up */
+.link:hover,
+.link:focus-visible {
+  transform: translateY(-3px);
+  color: var(--bark-900);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 10px 20px rgba(63, 79, 116, 0.2);
+  outline: none;
+}
+
+.link:hover::after,
+.link:focus-visible::after,
+.active::after {
+  width: 62%;
+}
+
+.active { color: var(--sky-700); }
+
+@media (prefers-reduced-motion: reduce) {
+  .link, .link::after { transition: none; }
+  .link:hover, .link:focus-visible { transform: none; }
+}
