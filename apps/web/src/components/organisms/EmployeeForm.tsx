@@ -5,6 +5,13 @@ import { Button } from "../atoms/Button";
 import { FormField } from "../molecules/FormField";
 import { SelectField } from "../molecules/SelectField";
 import styles from "./EmployeeForm.module.css";
+import {
+  MAX_AGE,
+  MIN_AGE,
+  isoDateYearsAgo,
+  validateBirthDate,
+  validateSalary,
+} from "../../utils/validation";
 
 interface EmployeeFormProps {
   employee?: Employee;
@@ -56,6 +63,16 @@ export function EmployeeForm({ employee, employees, onSaved, onCancel }: Employe
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    const clientErrors: Record<string, string> = {};
+    const birthError = validateBirthDate(values.birthDate);
+    const salaryError = validateSalary(values.salary);
+    if (birthError) clientErrors.birthDate = birthError;
+    if (salaryError) clientErrors.salary = salaryError;
+    if (Object.keys(clientErrors).length > 0) {
+      setFormError("");
+      setFieldErrors(clientErrors);
+      return;
+    }
     setFormError("");
     setFieldErrors({});
     setSaving(true);
@@ -95,7 +112,7 @@ export function EmployeeForm({ employee, employees, onSaved, onCancel }: Employe
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit} noValidate>
         {employee ? (
         <p className={styles.readOnly}>
         Employee number: <strong>{employee.employeeNumber}</strong> (assigned automatically)
@@ -108,16 +125,27 @@ export function EmployeeForm({ employee, employees, onSaved, onCancel }: Employe
         <FormField label="Surname" name="surname" value={values.surname} onChange={set("surname")} error={fieldErrors.surname} required />
         <FormField label="Email" name="email" type="email" value={values.email} onChange={set("email")} error={fieldErrors.email} required />
         <FormField label="Role / position" name="role" value={values.role} onChange={set("role")} error={fieldErrors.role} required />
-        <FormField label="Salary (ZAR)" name="salary" type="number" min={0} step="0.01" value={values.salary} onChange={set("salary")} error={fieldErrors.salary} required />
         <FormField
-          label="Birth date"
-          name="birthDate"
-          type="date"
-          max={new Date().toISOString().slice(0, 10)}
-          value={values.birthDate}
-          onChange={set("birthDate")}
-          error={fieldErrors.birthDate}
-          required
+            label="Salary (ZAR, above 500)"
+            name="salary"
+            type="number"
+            min={500.01}
+            step="0.01"
+            value={values.salary}
+            onChange={set("salary")}
+            error={fieldErrors.salary}
+            required
+        />
+        <FormField
+            label={`Birth date (${MIN_AGE} or older)`}
+            name="birthDate"
+            type="date"
+            min={isoDateYearsAgo(MAX_AGE)}
+            max={isoDateYearsAgo(MIN_AGE)}
+            value={values.birthDate}
+            onChange={set("birthDate")}
+            error={fieldErrors.birthDate}
+            required
         />
         <SelectField label="Reporting manager" name="managerId" value={values.managerId} onChange={set("managerId")} error={fieldErrors.managerId}>
           <option value="">No manager (top of the organisation)</option>
