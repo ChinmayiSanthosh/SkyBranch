@@ -34,24 +34,24 @@ export function HomePage() {
   return (
     <AppLayout>
       <div className={styles.stack}>
-        <CanopySection
-          employees={employees}
-          loading={loading}
-          onAdd={() => setCreating(true)}
-          onEdit={setEditing}
-          onDelete={setDeleting}
-        />
-        <RosterSection
-          employees={employees}
-          loading={loading}
-          error={error}
-          reload={reload}
-          onAdd={() => setCreating(true)}
-          onEdit={setEditing}
-          onDelete={setDeleting}
-        />
-        <AboutSection />
-      </div>
+        <AboutSection employees={employees} loading={loading} />
+  <CanopySection
+    employees={employees}
+    loading={loading}
+    onAdd={() => setCreating(true)}
+    onEdit={setEditing}
+    onDelete={setDeleting}
+  />
+  <RosterSection
+    employees={employees}
+    loading={loading}
+    error={error}
+    reload={reload}
+    onAdd={() => setCreating(true)}
+    onEdit={setEditing}
+    onDelete={setDeleting}
+  />
+</div>
 
       {(creating || editing) && (
         <Modal title={editing ? "Edit employee" : "Add employee"} onClose={closeForm}>

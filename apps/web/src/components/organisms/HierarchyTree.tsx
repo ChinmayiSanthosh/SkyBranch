@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { usePanZoom } from "../../hooks/usePanZoom";
 import type { Employee } from "../../services/types";
 import { NODE_H, buildForest, layoutForest, type PlacedNode } from "../../utils/tree";
+import StarBorder from "../atoms/StarBorder";
 import { TreeNodeCard, type NodeState } from "../molecules/TreeNodeCard";
 import { ZoomControls } from "../molecules/ZoomControls";
 import { EmployeeDetailPanel } from "./EmployeeDetailPanel";
@@ -100,84 +101,97 @@ export function HierarchyTree({
   return (
     <div>
       <div className={`${styles.layout} ${selected ? styles.withPanel : ""}`}>
-        <div ref={containerRef} className={styles.canvas}>
-          {isEmpty ? (
-            <div className={styles.empty}>
-              <p>No employees yet. Add the first one to plant the tree.</p>
-            </div>
-          ) : (
-            <>
-              <svg
-                className={`${styles.svg} ${dragging ? styles.dragging : ""}`}
-                width="100%"
-                height="100%"
-                role="group"
-                aria-label="Organisation tree"
-                {...bind}
-              >
-                <g
-                  style={{
-                    transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`,
-                    transformOrigin: "0 0",
-                    transition: animate && !dragging ? "transform 0.6s ease" : "none",
-                  }}
+        {/* StarBorder owns its own ref, so the pan/zoom container sits inside it */}
+        <StarBorder
+          as="div"
+          className={styles.frame}
+          radius={12}
+          theme="dark"
+          color="#ffffff"
+          borderColor="rgba(63, 79, 116, 0.22)"
+          thickness={1.5}
+          duration={12}
+          glow={1}
+        >
+          <div ref={containerRef} className={styles.canvas}>
+            {isEmpty ? (
+              <div className={styles.empty}>
+                <p>No employees yet. Add the first one to plant the tree.</p>
+              </div>
+            ) : (
+              <>
+                <svg
+                  className={`${styles.svg} ${dragging ? styles.dragging : ""}`}
+                  width="100%"
+                  height="100%"
+                  role="group"
+                  aria-label="Organisation tree"
+                  {...bind}
                 >
-                  {groundY !== null && (
-                    <>
-                      <line
-                        x1={layout.bounds.minX}
-                        x2={layout.bounds.maxX}
-                        y1={groundY}
-                        y2={groundY}
-                        className={styles.ground}
-                      />
-                      {layout.roots.map((root) => (
+                  <g
+                    style={{
+                      transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`,
+                      transformOrigin: "0 0",
+                      transition: animate && !dragging ? "transform 0.6s ease" : "none",
+                    }}
+                  >
+                    {groundY !== null && (
+                      <>
                         <line
-                          key={`trunk-${root.id}`}
-                          x1={root.x}
-                          x2={root.x}
-                          y1={NODE_H / 2}
+                          x1={layout.bounds.minX}
+                          x2={layout.bounds.maxX}
+                          y1={groundY}
                           y2={groundY}
-                          strokeWidth={9}
-                          className={styles.trunk}
+                          className={styles.ground}
                         />
-                      ))}
-                    </>
-                  )}
+                        {layout.roots.map((root) => (
+                          <line
+                            key={`trunk-${root.id}`}
+                            x1={root.x}
+                            x2={root.x}
+                            y1={NODE_H / 2}
+                            y2={groundY}
+                            strokeWidth={9}
+                            className={styles.trunk}
+                          />
+                        ))}
+                      </>
+                    )}
 
-                  {layout.links.map((link) => {
-                    const from = byId.get(link.from);
-                    const to = byId.get(link.to);
-                    if (!from || !to) return null;
-                    return (
-                      <path
-                        key={`${link.from}-${link.to}`}
-                        d={branchPath(from, to, growUp)}
-                        strokeWidth={Math.max(1.6, 7 - to.depth * 1.5)}
-                        className={styles.branch}
+                    {layout.links.map((link) => {
+                      const from = byId.get(link.from);
+                      const to = byId.get(link.to);
+                      if (!from || !to) return null;
+                      return (
+                        <path
+                          key={`${link.from}-${link.to}`}
+                          d={branchPath(from, to, growUp)}
+                          strokeWidth={Math.max(1.6, 7 - to.depth * 1.5)}
+                          className={styles.branch}
+                        />
+                      );
+                    })}
+
+                    {layout.nodes.map((node) => (
+                      <TreeNodeCard
+                        key={node.id}
+                        node={node}
+                        state={stateFor(node.id)}
+                        onSelect={(n) => setSelectedId(n.id)}
                       />
-                    );
-                  })}
+                    ))}
+                  </g>
+                </svg>
 
-                  {layout.nodes.map((node) => (
-                    <TreeNodeCard
-                      key={node.id}
-                      node={node}
-                      state={stateFor(node.id)}
-                      onSelect={(n) => setSelectedId(n.id)}
-                    />
-                  ))}
-                </g>
-              </svg>
-
-              <ZoomControls
-                onZoomIn={() => zoomBy(1.25)}
-                onZoomOut={() => zoomBy(0.8)}
-                onFit={() => fit(layout.bounds)}
-              />
-            </>
-          )}
-        </div>
+                <ZoomControls
+                  onZoomIn={() => zoomBy(1.25)}
+                  onZoomOut={() => zoomBy(0.8)}
+                  onFit={() => fit(layout.bounds)}
+                />
+              </>
+            )}
+          </div>
+        </StarBorder>
 
         {selected && (
           <EmployeeDetailPanel
