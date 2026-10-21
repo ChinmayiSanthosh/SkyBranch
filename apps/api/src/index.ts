@@ -11,7 +11,11 @@ const app = express();
 app.set("trust proxy", 1);
 
 app.use(helmet());
-app.use(cors());
+const allowedOrigins = process.env.CORS_ORIGIN?.split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({ origin: allowedOrigins && allowedOrigins.length > 0 ? allowedOrigins : true }));
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
