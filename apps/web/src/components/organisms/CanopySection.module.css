@@ -1,0 +1,8 @@
+.placeholder {
+  min-height: calc(100vh - 260px);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  border: 1px dashed var(--sky-300);
+  border-radius: 10px;
+}

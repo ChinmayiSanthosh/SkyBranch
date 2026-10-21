@@ -2,9 +2,9 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   padding: 0.7rem 1.5rem;
   background: var(--glass-bg);
@@ -14,14 +14,9 @@
   box-shadow: var(--glass-shadow);
 }
 .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.15rem; color: var(--bark-900); }
-.nav { display: flex; gap: 0.5rem; margin-right: auto; margin-left: 1.5rem; }
-.link {
-  padding: 0.4rem 0.9rem;
-  border-radius: 10px;
-  color: var(--bark-700);
-  text-decoration: none;
-  font-weight: 600;
+.actions { display: flex; align-items: center; gap: 1rem; justify-self: end; }
+
+@media (max-width: 800px) {
+  .header { grid-template-columns: 1fr auto; }
+  .header nav { grid-column: 1 / -1; grid-row: 2; }
 }
-.link:hover { background: rgba(255, 255, 255, 0.6); }
-.active { background: rgba(255, 255, 255, 0.85); color: var(--sky-700); }
-.actions { display: flex; align-items: center; gap: 1rem; }

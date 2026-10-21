@@ -13,6 +13,11 @@ interface AuthLayoutProps {
 export function AuthLayout({title,subtitle,children}:AuthLayoutProps){
     return(
         <main className={styles.page}>
+            {/* floating white glows behind the card */}
+            <span className={`${styles.blob} ${styles.blobOne}`} aria-hidden="true" />
+            <span className={`${styles.blob} ${styles.blobTwo}`} aria-hidden="true" />
+            <span className={`${styles.blob} ${styles.blobThree}`} aria-hidden="true" />
+
             <div className={styles.card}>
                 <Logo size={56}/>
                 <h1>{title}</h1>

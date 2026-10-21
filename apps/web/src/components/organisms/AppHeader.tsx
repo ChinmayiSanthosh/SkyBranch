@@ -1,12 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { SECTIONS, SECTION_IDS } from "../../constants/sections";
 import { useAuth } from "../../context/AuthContext";
+import { useActiveSection } from "../../hooks/useActiveSection";
+import { scrollToSection } from "../../utils/scroll";
 import { Button } from "../atoms/Button";
 import { Logo } from "../atoms/Logo";
+import { NavMenu } from "../molecules/NavMenu";
 import { UserBadge } from "../molecules/UserBadge";
 import styles from "./AppHeader.module.css";
 
 export function AppHeader() {
   const { user, logout } = useAuth();
+  const active = useActiveSection(SECTION_IDS);
 
   return (
     <header className={styles.header}>
@@ -14,14 +18,7 @@ export function AppHeader() {
         <Logo size={34} />
         <span>SkyBranch</span>
       </div>
-      <nav className={styles.nav} aria-label="Main">
-        <NavLink
-          to="/roster"
-          className={({ isActive }) => (isActive ? `${styles.link} ${styles.active}` : styles.link)}
-        >
-          Roster
-        </NavLink>
-      </nav>
+      <NavMenu items={SECTIONS} active={active} onNavigate={scrollToSection} />
       <div className={styles.actions}>
         {user && <UserBadge email={user.email} />}
         <Button variant="secondary" onClick={logout}>

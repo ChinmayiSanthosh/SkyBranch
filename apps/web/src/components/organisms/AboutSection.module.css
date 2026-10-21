@@ -1,0 +1,11 @@
+.intro { margin: 0; line-height: 1.6; max-width: 70ch; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.feature {
+  padding: 1rem 1.1rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+}
+.feature h3 { color: var(--sky-700); margin-bottom: 0.3rem; }
+.feature p { margin: 0; font-size: 0.92rem; line-height: 1.5; color: var(--bark-700); }
+.tech { margin: 0; font-size: 0.85rem; color: var(--muted); }

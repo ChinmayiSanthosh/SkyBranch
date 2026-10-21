@@ -1,17 +1,22 @@
 import { useState } from "react";
-import { Button } from "../components/atoms/Button";
-import { Modal } from "../components/molecules/Modal";
-import { SearchBox } from "../components/molecules/SearchBox";
-import { DeleteEmployeeDialog } from "../components/organisms/DeleteEmployeeDialog";
-import { EmployeeForm } from "../components/organisms/EmployeeForm";
-import { EmployeeTable } from "../components/organisms/EmployeeTable";
-import { AppLayout } from "../components/templates/AppLayout";
-import { useEmployees } from "../hooks/useEmployees";
-import type { Employee } from "../services/types";
-import styles from "./RosterPage.module.css";
+import type { Employee } from "../../services/types";
+import { Button } from "../atoms/Button";
+import { Modal } from "../molecules/Modal";
+import { SearchBox } from "../molecules/SearchBox";
+import { SectionCard } from "../molecules/SectionCard";
+import { DeleteEmployeeDialog } from "./DeleteEmployeeDialog";
+import { EmployeeForm } from "./EmployeeForm";
+import { EmployeeTable } from "./EmployeeTable";
+import styles from "./RosterSection.module.css";
 
-export function RosterPage() {
-  const { employees, loading, error, reload } = useEmployees();
+interface RosterSectionProps {
+  employees: Employee[];
+  loading: boolean;
+  error: string;
+  reload: () => Promise<void>;
+}
+
+export function RosterSection({ employees, loading, error, reload }: RosterSectionProps) {
   const [search, setSearch] = useState("");
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState<Employee | null>(null);
@@ -33,21 +38,21 @@ export function RosterPage() {
   }
 
   return (
-    <AppLayout>
-      <section className={styles.panel}>
-        <div className={styles.toolbar}>
-          <div>
-            <h1>Roster</h1>
-            <p className={styles.sub}>{employees.length} employees</p>
-          </div>
-          <div className={styles.tools}>
+    <>
+      <SectionCard
+        id="roster"
+        title="Roster"
+        subtitle={`${employees.length} employees`}
+        solid
+        actions={
+          <>
             <SearchBox value={search} onChange={setSearch} placeholder="Search everyone…" />
             <Button variant="success" onClick={() => setCreating(true)}>
               + Add employee
             </Button>
-          </div>
-        </div>
-
+          </>
+        }
+      >
         {error && (
           <div role="alert" className={styles.error}>
             {error}
@@ -67,7 +72,7 @@ export function RosterPage() {
             onDelete={setDeleting}
           />
         )}
-      </section>
+      </SectionCard>
 
       {(creating || editing) && (
         <Modal title={editing ? "Edit employee" : "Add employee"} onClose={closeForm}>
@@ -87,6 +92,6 @@ export function RosterPage() {
           onCancel={() => setDeleting(null)}
         />
       )}
-    </AppLayout>
+    </>
   );
 }
