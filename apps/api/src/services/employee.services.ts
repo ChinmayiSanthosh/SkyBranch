@@ -105,10 +105,41 @@ export async function getEmployee(id: number) {
     return toDto(row);
 }
 
-export async function createEmployee(data:EmployeeInput) {
-    await assertValidManager(null, data.managerId);
-    const row = await prisma.employee.create({data,select:employeeSelect});
-    return toDto(row);
+// highest plus 1 nd old ones can be reused 
+async function nextEmployeeNumber(): Promise<string> {
+  const rows = await prisma.employee.findMany({ select: { employeeNumber: true } });
+  const highest = rows.reduce((max, row) => {
+    const match = /^E(\d+)$/.exec(row.employeeNumber);
+    return match ? Math.max(max, Number(match[1])) : max;
+  }, 0);
+  return `E${String(highest + 1).padStart(3, "0")}`;
+}
+
+export async function createEmployee(data: EmployeeInput) {
+  await assertValidManager(null, data.managerId);
+
+  const emailTaken = await prisma.employee.findUnique({
+    where: { email: data.email },
+    select: { id: true },
+  });
+  if (emailTaken) throw new HttpError(409, "An employee with this email already exists");
+
+  // If two people are added at the same moment, the unique constraint rejects the second
+  // number, and we simply try again with a fresh one
+  let lastError: unknown;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      const row = await prisma.employee.create({
+        data: { ...data, employeeNumber: await nextEmployeeNumber() },
+        select: employeeSelect,
+      });
+      return toDto(row);
+    } catch (err) {
+      if ((err as { code?: string }).code !== "P2002") throw err;
+      lastError = err;
+    }
+  }
+  throw lastError;
 }
 
 export async function updateEmployee(id:number, data:UpdateEmployeeInput){

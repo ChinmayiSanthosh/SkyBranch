@@ -22,7 +22,6 @@ export interface EmployeeInput{
     surname: string;
     email: string;
     birthDate: string;
-    employeeNumber: string;
     salary: number;
     role: string;
     managerId: number | null;

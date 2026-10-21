@@ -18,7 +18,6 @@ interface Values {
   surname: string;
   email: string;
   birthDate: string;
-  employeeNumber: string;
   salary: string;
   role: string;
   managerId: string;
@@ -30,7 +29,6 @@ function toValues(e?: Employee): Values {
     surname: e?.surname ?? "",
     email: e?.email ?? "",
     birthDate: e?.birthDate ?? "",
-    employeeNumber: e?.employeeNumber ?? "",
     salary: e ? String(e.salary) : "",
     role: e?.role ?? "",
     managerId: e?.managerId ? String(e.managerId) : "",
@@ -67,7 +65,6 @@ export function EmployeeForm({ employee, employees, onSaved, onCancel }: Employe
       surname: values.surname,
       email: values.email,
       birthDate: values.birthDate,
-      employeeNumber: values.employeeNumber,
       salary: Number(values.salary),
       role: values.role,
       managerId: values.managerId ? Number(values.managerId) : null,
@@ -87,7 +84,7 @@ export function EmployeeForm({ employee, employees, onSaved, onCancel }: Employe
           setFieldErrors(mapped);
         }
         setFormError(
-          err.status === 409 ? "That email or employee number is already in use." : err.message
+          err.status === 409 ? "That email is already in use." : err.message
         );
       } else {
         setFormError("Could not reach the server");
@@ -99,11 +96,17 @@ export function EmployeeForm({ employee, employees, onSaved, onCancel }: Employe
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
+        {employee ? (
+        <p className={styles.readOnly}>
+        Employee number: <strong>{employee.employeeNumber}</strong> (assigned automatically)
+        </p>
+        ) : (
+        <p className={styles.readOnly}>The employee number is assigned automatically.</p>
+        )}
       <div className={styles.grid}>
         <FormField label="Name" name="name" value={values.name} onChange={set("name")} error={fieldErrors.name} required />
         <FormField label="Surname" name="surname" value={values.surname} onChange={set("surname")} error={fieldErrors.surname} required />
         <FormField label="Email" name="email" type="email" value={values.email} onChange={set("email")} error={fieldErrors.email} required />
-        <FormField label="Employee number" name="employeeNumber" value={values.employeeNumber} onChange={set("employeeNumber")} error={fieldErrors.employeeNumber} required />
         <FormField label="Role / position" name="role" value={values.role} onChange={set("role")} error={fieldErrors.role} required />
         <FormField label="Salary (ZAR)" name="salary" type="number" min={0} step="0.01" value={values.salary} onChange={set("salary")} error={fieldErrors.salary} required />
         <FormField
