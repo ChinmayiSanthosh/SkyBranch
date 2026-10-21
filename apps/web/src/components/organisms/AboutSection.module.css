@@ -1,11 +1,156 @@
-.intro { margin: 0; line-height: 1.6; max-width: 70ch; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
-.feature {
-  padding: 1rem 1.1rem;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
+.about {
+  scroll-margin-top: 90px;
+  min-height: calc(100vh - 140px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px; /* stats card is the thin one */
+  gap: 1.25rem;
 }
-.feature h3 { color: var(--sky-700); margin-bottom: 0.3rem; }
-.feature p { margin: 0; font-size: 0.92rem; line-height: 1.5; color: var(--bark-700); }
-.tech { margin: 0; font-size: 0.85rem; color: var(--muted); }
+
+.panel {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Main About card (the stats card gets its border from StarBorder instead) */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem 2.25rem;
+  min-width: 0;
+  border: 1px solid var(--glass-border);
+}
+.title { font-size: 1.9rem; color: var(--sky-700); }
+.sub { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.95rem; }
+.text { margin: 0; line-height: 1.65; font-size: 1.02rem; max-width: 62ch; color: var(--bark-700); }
+
+/* Feature cards stacked on the left, tree beside them on the right */
+.body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px; /* thinner tree column */
+  gap: 1.5rem;
+  min-height: 0;
+}
+.stack { display: grid; grid-template-rows: repeat(3, 1fr); gap: 0.85rem; }
+
+/* StarBorder supplies the border; these override its pill-button defaults */
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  color: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+.feature h3 { color: var(--sky-700); margin-bottom: 0.25rem; font-size: 1rem; }
+.feature p { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--bark-700); }
+
+.treeWrap {
+  position: relative;   /* the tree is positioned inside this */
+  min-height: 340px;
+  min-width: 0;
+}
+
+.tech { margin: 0; font-size: 0.8rem; color: var(--muted); }
+
+/* Thin stats card on the right */
+.statsCard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 1.4rem 1.4rem 0.9rem;
+  min-width: 0;
+  color: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+.statsHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(63, 79, 116, 0.14);
+}
+.eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.statsTitle { font-size: 1.05rem; line-height: 1.3; color: var(--sky-700); }
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--leaf-600);
+  background: rgba(95, 158, 127, 0.12);
+  border-radius: 999px;
+}
+.live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--leaf-500);
+  box-shadow: 0 0 0 0 rgba(95, 158, 127, 0.5);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(95, 158, 127, 0.5); }
+  70%, 100% { box-shadow: 0 0 0 7px rgba(95, 158, 127, 0); }
+}
+
+/* rows share the card's height equally */
+.statList { flex: 1; display: flex; flex-direction: column; margin: 0; }
+.statRow {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(63, 79, 116, 0.09);
+}
+.statRow:last-child { border-bottom: 0; }
+.statRow dt { font-size: 0.88rem; color: var(--bark-700); }
+.statRow dd {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--sky-700);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live::before { animation: none; }
+}
+
+/* Tablet: stats card drops under the About card */
+@media (max-width: 1000px) {
+  .about { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .statRow { padding: 0.7rem 0; }
+}
+
+/* Phone: feature cards and tree stack too */
+@media (max-width: 700px) {
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .stack { grid-template-rows: none; }
+}
