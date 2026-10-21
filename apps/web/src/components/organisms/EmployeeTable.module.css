@@ -1,0 +1,25 @@
+.wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--sky-100);
+}
+.table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.table th,
+.table td {
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  white-space: nowrap;
+}
+.table thead th { background: rgba(239, 227, 234, 0.7); }
+.table tbody tr:nth-child(even) { background: rgba(239, 227, 234, 0.35); }
+.table tbody tr:hover { background: rgba(185, 169, 196, 0.25); }
+.filters th { padding-top: 0; }
+.filters input { padding: 0.35rem 0.5rem; font-size: 0.8rem; min-width: 90px; }
+.actions { display: flex; gap: 0.4rem; }
+.empty { padding: 1.5rem; text-align: center; color: var(--muted); }
+.footer { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.85rem; }
