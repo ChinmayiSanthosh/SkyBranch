@@ -1,2 +1,6 @@
 .form { display: grid; gap: 1rem; }
 .switch { margin: 0; text-align: center; font-size: 0.9rem; }
+.switch a {
+  color: var(--link);
+  font-weight: 600;
+}

@@ -8,11 +8,11 @@
     transition: background 0.15s, opacity 0.15s;
 }
 .button:disabled { opacity: 0.6; cursor: not-allowed; }
-.primary { background: var(--sky-600); color: #fff; }
-.primary:hover:not(:disabled) { background: var(--sky-700); }
-.secondary { background: rgba(255, 255, 255, 0.6); color: var(--sky-700); border: 1px solid var(--glass-border); }
-.secondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.85); }
-.success { background: var(--leaf-500); color: #fff; }
-.success:hover:not(:disabled) { background: var(--leaf-600); }
-.danger { background: var(--danger); color: #fff; }
+.primary { background: var(--btn-primary-bg); color: #fff; }
+.primary:hover:not(:disabled) { background: var(--btn-primary-bg-hover); }
+.secondary { background: var(--btn-secondary-bg); color: var(--btn-secondary-text); border: 1px solid var(--glass-border); }
+.secondary:hover:not(:disabled) { background: var(--btn-secondary-bg-hover); }
+.success { background: var(--btn-success-bg); color: #fff; }
+.success:hover:not(:disabled) { background: var(--btn-success-bg-hover); }
+.danger { background: var(--btn-danger-bg); color: #fff; }
 .small { padding: 0.35rem 0.7rem; font-size: 0.85rem; }
