@@ -224,4 +224,4 @@ Messages about age and salary appear under the field. The person must be 18 to 1
 | I cannot see salaries, or the Add, Edit and Delete buttons are missing | You are signed in with an employee (view-only) account. Administrators see them |
 | A new picture does not appear | Gravatar must be set up with the same email (section 11). Wait a few minutes and reload |
 | The tree looks lost or too small | Select **Fit** |
-| Something looks out of date | Reload the page. If that does not help, hold **Ctrl + Shift + R** 
+| Something looks out of date | Reload the page. If that does not help, hold **Ctrl + Shift + R** |

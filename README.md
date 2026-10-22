@@ -1,19 +1,65 @@
-# SkyBranch
+<p align="center">
+  <img src="docs/images/banner.svg" alt="SkyBranch: grow your org chart" width="100%">
+</p>
 
-**Grow your org chart.** SkyBranch is a cloud-hosted employee hierarchy manager. Your organisation is drawn as a living tree, every person is a branch, and every reporting line is a connection, all kept in sync with a live database.
+<p align="center">
+  A cloud-hosted employee hierarchy manager. Your organisation is drawn as a living tree, every person is a branch,
+  and every reporting line is a connection, all kept in sync with a live database.
+</p>
+
+<p align="center">
+  <img alt="React" src="https://img.shields.io/badge/React_19-56688f?style=flat&logo=react&logoColor=white">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-56688f?style=flat&logo=typescript&logoColor=white">
+  <img alt="Node.js" src="https://img.shields.io/badge/Node.js_22-5f9e7f?style=flat&logo=nodedotjs&logoColor=white">
+  <img alt="Express" src="https://img.shields.io/badge/Express-5f9e7f?style=flat&logo=express&logoColor=white">
+  <img alt="Prisma" src="https://img.shields.io/badge/Prisma_7-3a3f55?style=flat&logo=prisma&logoColor=white">
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-3a3f55?style=flat&logo=postgresql&logoColor=white">
+</p>
+
+<p align="center">
+  <a href="https://sky-branch.vercel.app"><b>Live app</b></a> &nbsp;·&nbsp;
+  <a href="docs/user-guide.md">User guide</a> &nbsp;·&nbsp;
+  <a href="docs/technical-document.md">Technical document</a>
+</p>
 
 Built by Chinmayi Santhosh as a technical assessment for EPI-USE Africa.
 
+> **Please note:** the app runs on free hosting that goes to sleep when idle. The first request after a quiet spell can take about a minute. The login page shows a "waking up the server" message while this happens. Wait for it and the page will carry on by itself.
+
+## Where it runs
+
+SkyBranch is deployed across three platforms, each doing one job. All of them deploy from this repository.
+
+| Platform | Role | Link |
+|---|---|---|
+| **Vercel** | Frontend (React app) | https://sky-branch.vercel.app |
+| **Render** | Backend (Express API) | https://skybranch-api.onrender.com · [health check](https://skybranch-api.onrender.com/api/health) |
+| **Neon** | PostgreSQL database | https://neon.tech · project `skybranch`, branch `production`, AWS Europe Central 1 (Frankfurt) |
+
+The database is private, so it has no public address. The app and the API are the public parts. The first request to the API after it has been idle may be slow (see the note above).
+
 | | |
 |---|---|
-| **Live app** | https://sky-branch.vercel.app |
-| **Live API** | https://skybranch-api.onrender.com |
 | **Repository** | https://github.com/ChinmayiSanthosh/SkyBranch |
 | **Reviewer login** | Supplied in the submission email (not published in this public repository) |
-| **User guide** | [docs/user-guide.md](docs/user-guide.md) |
-| **Technical document** | [docs/technical-document.md](docs/technical-document.md) |
 
-> **Please note:** the app runs on free hosting that goes to sleep when idle. The first request after a quiet spell can take about a minute. The login page shows a "waking up the server" message while this happens. Wait for it and the page will carry on by itself.
+## Screenshots
+
+**Canopy: the organisation as a tree**
+
+![Canopy tree view](docs/images/canopy.png)
+
+**Roster: sort and filter on every column**
+
+![Roster table view](docs/images/roster.png)
+
+| Sign in | Employee sign-up |
+|---|---|
+| ![Login page](docs/images/login.png) | ![Employee sign-up page](docs/images/signup.png) |
+
+**About: live organisation statistics**
+
+![About section](docs/images/about.png)
 
 ## What it does
 
@@ -68,12 +114,42 @@ Gravatar images are loaded by the browser straight from gravatar.com.
 ```
 SkyBranch/
 ├── apps/
-│   ├── api/                 # Express + TypeScript backend, Prisma schema and migrations
-│   └── web/                 # React + Vite frontend (atoms > molecules > organisms > templates > pages)
-├── docs/                    # user guide, technical document, images
-├── .github/workflows/       # reserved for CI (not built yet)
-├── .env.example             # API variable names
-└── README.md
+│   ├── api/                          Express + TypeScript REST API (@skybranch/api)
+│   │   ├── prisma/                   Schema and versioned migrations
+│   │   ├── src/
+│   │   │   ├── config/               Environment settings
+│   │   │   ├── controllers/          Request and response handling
+│   │   │   ├── middleware/           Auth and role checks, request validation, error handling
+│   │   │   ├── routes/               URL to controller mapping, including health checks
+│   │   │   ├── services/             Business rules: hierarchy, salary privacy, sign-up and login
+│   │   │   ├── utils/                Error type and async handler
+│   │   │   ├── validators/           zod schemas for requests
+│   │   │   ├── db.ts                 Prisma client
+│   │   │   └── index.ts              App setup: helmet, CORS, rate limits, routes
+│   │   └── prisma.config.ts          Prisma settings (direct connection for migrations)
+│   └── web/                          React single-page app (@skybranch/web)
+│       ├── vercel.json               Rewrite so refreshing a client route does not 404
+│       └── src/
+│           ├── components/
+│           │   ├── atoms/            Button, Input, Select, Logo, Avatar and other basics
+│           │   ├── molecules/        Form fields, search box, modal, nav menu, tree node, zoom controls
+│           │   ├── organisms/        Login and sign-up forms, header, employee form, table, tree, sections
+│           │   └── templates/        AuthLayout and AppLayout
+│           ├── pages/                Login, sign-up and home pages
+│           ├── routes/               Protected route (redirects to login)
+│           ├── context/              AuthContext (session state)
+│           ├── hooks/                Employees, pan and zoom, active section, permissions, theme
+│           ├── services/             Typed API client and shared types
+│           ├── utils/                Tree layout, validation, formatting, scrolling
+│           ├── constants/            Section names for the navigation
+│           └── styles/               Design tokens (including the dark theme) and global styles
+├── docs/
+│   ├── user-guide.md                 Step-by-step guide for end users
+│   ├── technical-document.md         Architecture, patterns, technologies and justification
+│   └── images/                       Banner and screenshots
+├── .github/workflows/                Reserved for CI (not built yet)
+├── .env.example                      API variable names (no secrets)
+└── package.json                      npm workspaces and dev scripts
 ```
 
 `apps/web/.env.example` lists the frontend variable.
@@ -119,7 +195,7 @@ Names only. Real values are never committed, and `.env` is git-ignored.
 
 ## Deployment
 
-Both apps deploy automatically when the `main` branch changes.
+Vercel and Render deploy automatically when the `main` branch changes.
 
 - **API (Render):** free Node web service. Build command `npm ci --include=dev && npm run build --workspace apps/api`, start command `npm run start --workspace apps/api`. Set `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `JWT_SECRET`, `NODE_VERSION` and `CORS_ORIGIN`.
 - **Frontend (Vercel):** root directory `apps/web`, Vite preset, variable `VITE_API_URL`. `apps/web/vercel.json` rewrites every path to `index.html` so refreshing on `/login` does not return a 404.
@@ -136,11 +212,13 @@ Both apps deploy automatically when the `main` branch changes.
 | Table with sort and filter on any field | Roster: sortable columns, a filter per column, and a global search |
 | Gravatar integration | Avatars shown on the tree and in the table, with initials as fallback |
 | Avatar upload (optional) | Not built. Listed as future work |
-| Cloud deployed, reachable by URL | Vercel, Render and Neon, linked at the top of this file |
+| Cloud deployed, reachable by URL | Vercel, Render and Neon, linked in "Where it runs" above |
 | User guide | [docs/user-guide.md](docs/user-guide.md) |
 | Short technical document | [docs/technical-document.md](docs/technical-document.md) |
 | No mocked data | All data lives in the remote Neon database. Nothing is hardcoded or read from local files |
 | Git repository | This repository |
 | Extra functionality documented | See section 13 of the technical document |
 
-#
+## Honest status
+
+Not built yet: avatar upload, Swagger/OpenAPI documentation, automated tests, and a CI pipeline. Testing so far has been manual. These and other limitations are listed in the technical document.
