@@ -47,6 +47,11 @@ async function request<T>(path:string,options:RequestInit = {}):Promise<T> {
 
 export const api = {
     health: () => request<{ status: string}>("/api/health"),
+      signup: (email: string, password: string) =>
+        request<{ token: string; user: User }>("/api/auth/signup", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+    }),
     login: (email:string,password:string) => 
         request<{token: string; user:User}>("/api/auth/login",{
             method:"POST",

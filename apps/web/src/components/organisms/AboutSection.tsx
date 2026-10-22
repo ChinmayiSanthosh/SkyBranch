@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { usePermissions } from "../../hooks/usePermissions";
 import type { Employee } from "../../services/types";
 import { formatSalary } from "../../utils/format";
 import StarBorder from "../atoms/StarBorder";
@@ -34,7 +35,7 @@ function computeStats(employees: Employee[]) {
   let deepest = 0;
 
   for (const e of employees) {
-    total += e.salary;
+    total += e.salary ?? 0;
     roles.add(e.role.trim().toLowerCase());
     if (e.managerId) managers.add(e.managerId);
 
@@ -58,6 +59,7 @@ function computeStats(employees: Employee[]) {
 }
 
 export function AboutSection({ employees, loading }: AboutSectionProps) {
+  const { canSeeSalary } = usePermissions();
   const stats = useMemo(() => computeStats(employees), [employees]);
   const show = (value: string | number) => (loading ? "—" : value);
 
@@ -66,7 +68,9 @@ export function AboutSection({ employees, loading }: AboutSectionProps) {
     { label: "Managers", value: show(stats.managers) },
     { label: "Levels deep", value: show(stats.levels) },
     { label: "Distinct roles", value: show(stats.roles) },
-    { label: "Average salary", value: show(stats.people ? formatSalary(stats.average) : "—") },
+    ...(canSeeSalary
+      ? [{ label: "Average salary", value: show(stats.people ? formatSalary(stats.average) : "—") }]
+      : []),
   ];
 
   return (

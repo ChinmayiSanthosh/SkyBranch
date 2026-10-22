@@ -1,3 +1,4 @@
+import { usePermissions } from "../../hooks/usePermissions";
 import type { Employee } from "../../services/types";
 import { formatSalary } from "../../utils/format";
 import { Avatar } from "../atoms/Avatar";
@@ -19,6 +20,7 @@ export function EmployeeDetailPanel({
   onDelete,
   onClose,
 }: EmployeeDetailPanelProps) {
+  const { canManage, canSeeSalary } = usePermissions();
   const fullName = `${employee.name} ${employee.surname}`;
 
   return (
@@ -38,8 +40,12 @@ export function EmployeeDetailPanel({
         <dd>{employee.employeeNumber}</dd>
         <dt>Email</dt>
         <dd>{employee.email}</dd>
-        <dt>Salary</dt>
-        <dd>{formatSalary(employee.salary)}</dd>
+        {canSeeSalary && employee.salary !== null && (
+          <>
+            <dt>Salary</dt>
+            <dd>{formatSalary(employee.salary)}</dd>
+          </>
+        )}
         <dt>Birth date</dt>
         <dd>{employee.birthDate}</dd>
         <dt>Manager</dt>
@@ -47,14 +53,16 @@ export function EmployeeDetailPanel({
         <dt>Direct reports</dt>
         <dd>{reports}</dd>
       </dl>
-      <div className={styles.actions}>
-        <Button small variant="secondary" onClick={() => onEdit(employee)}>
-          Edit
-        </Button>
-        <Button small variant="danger" onClick={() => onDelete(employee)}>
-          Delete
-        </Button>
-      </div>
+      {canManage && (
+        <div className={styles.actions}>
+          <Button small variant="secondary" onClick={() => onEdit(employee)}>
+            Edit
+          </Button>
+          <Button small variant="danger" onClick={() => onDelete(employee)}>
+            Delete
+          </Button>
+        </div>
+      )}
     </aside>
   );
 }
