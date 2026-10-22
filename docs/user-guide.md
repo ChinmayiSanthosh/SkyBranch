@@ -42,7 +42,7 @@ The app runs on free hosting that goes to sleep when nobody has used it for a wh
 
 ## 3. Signing in
 
-1. Type your **email** and **password**.
+1. Type your **email** and **password**(provided in the email with the submission, this is the admin email and password).
 2. Select **Sign in**.
 
 If the details are wrong, a message appears and you can try again. You stay signed in for 8 hours, or until you sign out.
@@ -51,7 +51,7 @@ If the details are wrong, a message appears and you can try again. You stay sign
 
 ## 4. Creating an employee login
 
-This is for employees only. Administrators receive their login from whoever runs the system.
+This is for employees only. Administrators receive their login from whoever runs the system(example employee login also provided in the submission).
 
 1. On the login page, select **Create your login** (or go to `/signup`).
 2. Type your **work email**. It must be the same email your administrator used when adding you to SkyBranch.
