@@ -226,11 +226,7 @@ AWS was considered. New AWS accounts now get a credit-based free plan that expir
 | Not built: avatar upload | Optional in the brief. Plan: store a small resized image in the database and show uploaded picture, then Gravatar, then initials |
 | Employee sign-up has no email verification | The first person to register a given work email owns that login, and there is no administrator screen to reset or remove a login (deleting the employee removes it). An email service would allow verification and password reset |
 | Single administrator role | No finer-grained roles, for example managers who may see their own team's salaries |
-| Change-password has an API endpoint but no screen | Low effort to add |
 | Token stored in `localStorage` | Readable by injected scripts. `httpOnly` cookies are stronger |
 | Sorting and filtering in the browser | Server-side pagination would be needed for very large organisations |
-| Employee numbers can be reused | If the newest employee is deleted, their number can be issued again. A dedicated counter would fix this |
 | No automated tests or CI | Next step: unit tests for the hierarchy rules and a GitHub Actions workflow running build and lint |
-| No Swagger / OpenAPI documentation | The endpoint table in section 6 stands in for it |
-| Free-tier cold starts | Mitigated by the banner. An uptime monitor or paid instance would remove them |
 | One database for local and live use | Neon branches would separate them |
