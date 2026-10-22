@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePermissions } from "../../hooks/usePermissions";
 import type { Employee } from "../../services/types";
 import { Button } from "../atoms/Button";
 import { SearchBox } from "../molecules/SearchBox";
@@ -14,6 +15,7 @@ interface CanopySectionProps {
 }
 
 export function CanopySection({ employees, loading, onAdd, onEdit, onDelete }: CanopySectionProps) {
+  const { canManage } = usePermissions();
   const [search, setSearch] = useState("");
   const [cursor, setCursor] = useState(0);
   const [growUp, setGrowUp] = useState(true);
@@ -39,9 +41,11 @@ export function CanopySection({ employees, loading, onAdd, onEdit, onDelete }: C
           <Button variant="secondary" onClick={() => setGrowUp((g) => !g)}>
             Flip tree
           </Button>
-          <Button variant="success" onClick={onAdd}>
-            + Add employee
-          </Button>
+          {canManage && (
+            <Button variant="success" onClick={onAdd}>
+              + Add employee
+            </Button>
+          )}
         </>
       }
     >

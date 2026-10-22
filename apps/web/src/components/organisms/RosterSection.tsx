@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePermissions } from "../../hooks/usePermissions";
 import type { Employee } from "../../services/types";
 import { Button } from "../atoms/Button";
 import { SearchBox } from "../molecules/SearchBox";
@@ -25,6 +26,7 @@ export function RosterSection({
   onEdit,
   onDelete,
 }: RosterSectionProps) {
+  const { canManage } = usePermissions();
   const [search, setSearch] = useState("");
 
   return (
@@ -36,9 +38,11 @@ export function RosterSection({
       actions={
         <>
           <SearchBox value={search} onChange={setSearch} placeholder="Search everyone…" />
-          <Button variant="success" onClick={onAdd}>
-            + Add employee
-          </Button>
+          {canManage && (
+            <Button variant="success" onClick={onAdd}>
+              + Add employee
+            </Button>
+          )}
         </>
       }
     >

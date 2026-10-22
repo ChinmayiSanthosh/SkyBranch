@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { usePermissions } from "../../hooks/usePermissions";
 import type { Employee } from "../../services/types";
 import { formatSalary } from "../../utils/format";
 import { Avatar } from "../atoms/Avatar";
@@ -38,9 +39,9 @@ const COLUMNS: Column[] = [
   {
     key: "salary",
     label: "Salary",
-    text: (e) => String(e.salary),
-    sortValue: (e) => e.salary,
-    display: (e) => formatSalary(e.salary),
+    text: (e) => String(e.salary ?? ""),
+    sortValue: (e) => e.salary ?? 0,
+    display: (e) => (e.salary === null ? "—" : formatSalary(e.salary)),
     numeric: true,
     placeholder: ">100000",
   },
@@ -78,20 +79,27 @@ interface EmployeeTableProps {
 }
 
 export function EmployeeTable({ employees, search, onEdit, onDelete }: EmployeeTableProps) {
+  const { canManage, canSeeSalary } = usePermissions();
   const [sort, setSort] = useState<{ key: ColumnKey; dir: "asc" | "desc" }>({
     key: "surname",
     dir: "asc",
   });
   const [filters, setFilters] = useState<Partial<Record<ColumnKey, string>>>({});
 
+  // Employees do not get the salary column
+  const columns = useMemo(
+    () => (canSeeSalary ? COLUMNS : COLUMNS.filter((c) => c.key !== "salary")),
+    [canSeeSalary]
+  );
+
   const rows = useMemo(() => {
     const s = search.trim().toLowerCase();
     const filtered = employees.filter((e) => {
-      if (s && !COLUMNS.some((c) => c.text(e).toLowerCase().includes(s))) return false;
-      return COLUMNS.every((c) => matchesColumn(c, e, filters[c.key] ?? ""));
+      if (s && !columns.some((c) => c.text(e).toLowerCase().includes(s))) return false;
+      return columns.every((c) => matchesColumn(c, e, filters[c.key] ?? ""));
     });
 
-    const column = COLUMNS.find((c) => c.key === sort.key)!;
+    const column = columns.find((c) => c.key === sort.key) ?? columns[0];
     return [...filtered].sort((x, y) => {
       const a = column.sortValue(x);
       const b = column.sortValue(y);
@@ -101,7 +109,7 @@ export function EmployeeTable({ employees, search, onEdit, onDelete }: EmployeeT
           : String(a).localeCompare(String(b), undefined, { sensitivity: "base" });
       return sort.dir === "asc" ? result : -result;
     });
-  }, [employees, search, filters, sort]);
+  }, [employees, search, filters, sort, columns]);
 
   function toggleSort(key: ColumnKey) {
     setSort((current) =>
@@ -118,7 +126,7 @@ export function EmployeeTable({ employees, search, onEdit, onDelete }: EmployeeT
           <thead>
             <tr>
               <th aria-label="Avatar" />
-              {COLUMNS.map((c) => (
+              {columns.map((c) => (
                 <SortableHeader
                   key={c.key}
                   label={c.label}
@@ -127,11 +135,11 @@ export function EmployeeTable({ employees, search, onEdit, onDelete }: EmployeeT
                   onSort={() => toggleSort(c.key)}
                 />
               ))}
-              <th>Actions</th>
+              <th>{canManage ? "Actions" : ""}</th>
             </tr>
             <tr className={styles.filters}>
               <th />
-              {COLUMNS.map((c) => (
+              {columns.map((c) => (
                 <th key={c.key}>
                   <Input
                     aria-label={`Filter by ${c.label}`}
@@ -154,18 +162,20 @@ export function EmployeeTable({ employees, search, onEdit, onDelete }: EmployeeT
                 <td>
                   <Avatar email={e.email} name={`${e.name} ${e.surname}`} size={32} />
                 </td>
-                {COLUMNS.map((c) => (
+                {columns.map((c) => (
                   <td key={c.key}>{c.display ? c.display(e) : c.text(e)}</td>
                 ))}
                 <td>
-                  <div className={styles.actions}>
-                    <Button small variant="secondary" onClick={() => onEdit(e)}>
-                      Edit
-                    </Button>
-                    <Button small variant="danger" onClick={() => onDelete(e)}>
-                      Delete
-                    </Button>
-                  </div>
+                  {canManage && (
+                    <div className={styles.actions}>
+                      <Button small variant="secondary" onClick={() => onEdit(e)}>
+                        Edit
+                      </Button>
+                      <Button small variant="danger" onClick={() => onDelete(e)}>
+                        Delete
+                      </Button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
