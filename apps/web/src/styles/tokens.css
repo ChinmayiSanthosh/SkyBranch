@@ -25,6 +25,11 @@
   --radius: 14px;
   --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 
+  --input-bg: rgba(255, 255, 255, 0.85);
+  --input-text: var(--text);
+  --input-border: var(--sky-300);
+  --input-placeholder: var(--muted);
+
   /* background for now */
   --dusk-gradient: linear-gradient(100deg, #9aa5bd 0%, #c9b6c6 38%, #f1c3c0 68%, #f8b4a6 100%);
 
@@ -49,4 +54,88 @@
     inset 0 -1px 0 rgba(63, 79, 116, 0.1),
     inset 0 0 26px rgba(255, 255, 255, 0.24);
   --glass-blur: blur(18px) saturate(150%);
+}
+
+
+:root {
+  color-scheme: light;
+    --auth-card-bg: rgba(255, 255, 255, 0.28);
+  --auth-card-border: rgba(255, 255, 255, 0.5);
+  --auth-card-shadow:
+    0 16px 40px rgba(63, 79, 116, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --link: var(--sky-600);
+
+  --btn-primary-bg: var(--sky-600);
+  --btn-primary-bg-hover: var(--sky-700);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.6);
+  --btn-secondary-bg-hover: rgba(255, 255, 255, 0.85);
+  --btn-secondary-text: var(--sky-700);
+  --btn-success-bg: var(--leaf-500);
+  --btn-success-bg-hover: var(--leaf-600);
+  --btn-danger-bg: var(--danger);
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+    --auth-card-bg: rgba(24, 28, 46, 0.82);
+  --auth-card-border: rgba(255, 255, 255, 0.14);
+  --auth-card-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --link: #a3b2d6;
+
+  --input-bg: rgba(255, 255, 255, 0.08);
+  --input-text: #eef0f8;
+  --input-border: rgba(255, 255, 255, 0.24);
+  --input-placeholder: #9096b0;
+
+  /* The scales are flipped: 50 is now the darkest surface, 900 the lightest text */
+  --sky-50: #1a1e2e;
+  --sky-100: #242a3f;
+  --sky-300: #465174;
+  --sky-500: #8d9dc6;
+  --sky-600: #7186b8;
+  --sky-700: #a3b2d6;
+
+  --leaf-500: #6fb592;
+  --leaf-600: #5da384;
+
+  --bark-500: #a4a9c2;
+  --bark-700: #ccd0e3;
+  --bark-900: #eef0f8;
+
+  --coral-400: #f2a090;
+  --coral-500: #ec8c7b;
+
+  --danger: #ff8274;
+
+  --dusk-gradient: linear-gradient(100deg, #141929 0%, #25203b 40%, #35253f 70%, #44293a 100%);
+  --btn-primary-bg: #5d72a6;
+  --btn-primary-bg-hover: #4d6196;
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-bg-hover: rgba(255, 255, 255, 0.18);
+  --btn-secondary-text: #d5dcf0;
+  --btn-success-bg: #3f8a68;
+  --btn-success-bg-hover: #357a5a;
+  --btn-danger-bg: #c4443a;
+
+  /* Glass */
+  --glass-tint-1: rgba(34, 40, 62, 0.72);
+  --glass-tint-2: rgba(22, 26, 44, 0.45);
+  --glass-sheen: radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 55%);
+  --glass-bg-solid: var(--glass-sheen),
+    linear-gradient(145deg, rgba(34, 40, 62, 0.97), rgba(22, 26, 44, 0.92));
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    inset 0 0 22px rgba(255, 255, 255, 0.03);
+  --glass-shadow-hover:
+    0 14px 44px rgba(0, 0, 0, 0.55),
+    0 2px 8px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    inset 0 0 26px rgba(255, 255, 255, 0.05);
 }

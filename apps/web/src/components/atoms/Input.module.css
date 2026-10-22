@@ -1,11 +1,20 @@
 .input {
     width: 100%;
     padding: 0.65rem 0.8rem;
-    border: 1px solid var(--sky-300);
+    border: 1px solid var(--input-border);
     border-radius: 10px;
     font: inherit;
-    background: rgba(255, 255, 255, 0.85);
-    color: var(--text);
+    background: var(--input-bg);
+    color: var(--input-text);
 }
+.input::placeholder { color: var(--input-placeholder); }
 .input:focus { outline: 2px solid var(--sky-500); outline-offset: 1px; }
 .input[aria-invalid="true"] { border-color: var(--danger); }
+
+/* Browsers paint a pale colour over autofilled fields, which hides light text in dark mode */
+:root[data-theme="dark"] .input:-webkit-autofill,
+:root[data-theme="dark"] .input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--input-text);
+    caret-color: var(--input-text);
+    box-shadow: 0 0 0 1000px #232842 inset;
+}

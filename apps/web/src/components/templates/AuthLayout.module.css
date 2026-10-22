@@ -23,15 +23,13 @@
   max-width: 400px;
 
   /* milky white tint + heavy blur = frosted glass */
-  background: rgba(255, 255, 255, 0.28);
+ background: var(--auth-card-bg);
   -webkit-backdrop-filter: blur(10px) saturate(150%);
   backdrop-filter: blur(10px) saturate(150%);
 
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--auth-card-border);
   border-radius: 24px;
-  box-shadow:
-    0 16px 40px rgba(63, 79, 116, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow: var(--auth-card-shadow);
 
   padding: 2rem;
   display: grid;
