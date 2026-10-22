@@ -2,7 +2,7 @@
 
 **Author:** Chinmayi Santhosh  
 **Repository:** https://github.com/ChinmayiSanthosh/SkyBranch  
-**Live app:** https://sky-branch.vercel.app · **Live API:** https://skybranch-api.onrender.com
+**Live app:** https://sky-branch.vercel.app · **API health check:** https://skybranch-api.onrender.com/api/health
 
 ## 1. Overview
 
