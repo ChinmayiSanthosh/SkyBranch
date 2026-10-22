@@ -33,7 +33,7 @@ SkyBranch is deployed across three platforms, each doing one job. All of them de
 | Platform | Role | Link |
 |---|---|---|
 | **Vercel** | Frontend (React app) | https://sky-branch.vercel.app |
-| **Render** | Backend (Express API) | https://skybranch-api.onrender.com · [health check](https://skybranch-api.onrender.com/api/health) |
+| **Render** | Backend (Express API) | [API health check](https://skybranch-api.onrender.com/api/health) |
 | **Neon** | PostgreSQL database | https://neon.tech · project `skybranch`, branch `production`, AWS Europe Central 1 (Frankfurt) |
 
 The database is private, so it has no public address. The app and the API are the public parts. The first request to the API after it has been idle may be slow (see the note above).
@@ -218,7 +218,3 @@ Vercel and Render deploy automatically when the `main` branch changes.
 | No mocked data | All data lives in the remote Neon database. Nothing is hardcoded or read from local files |
 | Git repository | This repository |
 | Extra functionality documented | See section 13 of the technical document |
-
-## Honest status
-
-Not built yet: avatar upload, Swagger/OpenAPI documentation, automated tests, and a CI pipeline. Testing so far has been manual. These and other limitations are listed in the technical document.
