@@ -5,6 +5,7 @@ import { scrollToSection } from "../../utils/scroll";
 import { Button } from "../atoms/Button";
 import { Logo } from "../atoms/Logo";
 import { NavMenu } from "../molecules/NavMenu";
+import { ThemeToggle } from "../molecules/ThemeToggle";
 import { UserBadge } from "../molecules/UserBadge";
 import styles from "./AppHeader.module.css";
 
@@ -21,6 +22,7 @@ export function AppHeader() {
       <NavMenu items={SECTIONS} active={active} onNavigate={scrollToSection} />
       <div className={styles.actions}>
         {user && <UserBadge email={user.email} />}
+        <ThemeToggle />
         <Button variant="secondary" onClick={logout}>
           Sign out
         </Button>
